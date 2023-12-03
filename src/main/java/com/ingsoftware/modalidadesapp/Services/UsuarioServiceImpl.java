@@ -1,18 +1,22 @@
 package com.ingsoftware.modalidadesapp.Services;
 
 import com.ingsoftware.modalidadesapp.IServices.IUsuarioService;
+import com.ingsoftware.modalidadesapp.Models.EstudianteModel;
 import com.ingsoftware.modalidadesapp.Models.Usuario;
 import com.ingsoftware.modalidadesapp.Models.UsuarioRol;
 import com.ingsoftware.modalidadesapp.Repositories.IRolRepository;
 import com.ingsoftware.modalidadesapp.Repositories.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private IUsuarioRepository usuarioRepository;
 
@@ -45,6 +49,22 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     public void eliminarUsuario(Long usu_id) {
         usuarioRepository.deleteById(usu_id);
+    }
+
+    @Override
+    public boolean updateUsuario(String username, String newPassword){
+        //op es el objeto que va validar si existe un registro con el id que llega por parametro [id]
+        Usuario usuarioLocal =  usuarioRepository.findByUsername(username);
+        System.out.println(username);
+        if(usuarioLocal != null){
+            System.out.println("El usuario ya existe");
+            usuarioLocal.setPassword(passwordEncoder.encode(newPassword));
+            usuarioRepository.save(usuarioLocal);
+            return true;
+        } else {
+            System.out.println("El usuario No existe");
+            return false;
+        }
     }
 
 }

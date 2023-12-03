@@ -26,6 +26,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class MySecurityConfig {
     private static final String[] WHITE_LIST_URL = {"/api/user/authentication",
             "/api/user/register",
+            "/api/user/update"
     };
 
     @Bean

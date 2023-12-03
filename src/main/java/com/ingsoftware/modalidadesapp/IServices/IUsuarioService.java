@@ -1,6 +1,7 @@
 package com.ingsoftware.modalidadesapp.IServices;
 
 
+
 import com.ingsoftware.modalidadesapp.Models.Usuario;
 import com.ingsoftware.modalidadesapp.Models.UsuarioRol;
 
@@ -12,4 +13,5 @@ public interface IUsuarioService {
 
     public void eliminarUsuario(Long usuarioId);
 
+    public boolean updateUsuario(String username, String newPassword);
 }

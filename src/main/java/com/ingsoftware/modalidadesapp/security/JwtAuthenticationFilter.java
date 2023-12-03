@@ -40,6 +40,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter  {
         }if (request.getServletPath().contains("/api/user/register")) {
             filterChain.doFilter(request, response);
             return;
+        }if (request.getServletPath().contains("/api/user/update")) {
+            filterChain.doFilter(request, response);
+            return;
         }
         String requestTokenHeader = request.getHeader("Authorization");
         String username = null;

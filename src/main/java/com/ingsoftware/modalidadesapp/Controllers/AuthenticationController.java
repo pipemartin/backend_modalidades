@@ -101,4 +101,12 @@ public class AuthenticationController {
         }
     }
 
+    @PostMapping("/update")
+    private ResponseEntity<String> updateUsuario(@RequestBody Map<String, String> requestBody) {
+        String username = requestBody.get("username");
+        String newPassword = requestBody.get("newPassword");
+        boolean isCorrect = usuarioService.updateUsuario(username,newPassword);
+        return isCorrect  ? ResponseEntity.ok("Usuario update") : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error usuario update");
+    }
+
 }
