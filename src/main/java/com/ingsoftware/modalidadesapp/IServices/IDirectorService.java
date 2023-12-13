@@ -2,6 +2,7 @@ package com.ingsoftware.modalidadesapp.IServices;
 
 import com.ingsoftware.modalidadesapp.Models.DirectorModel;
 import com.ingsoftware.modalidadesapp.Repositories.IDirectorRepository;
+import com.ingsoftware.modalidadesapp.Repositories.IEstudianteRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,4 +19,6 @@ public interface IDirectorService {
 
     //todo Actualizar
     DirectorModel updateDirector(Long id, DirectorModel updatedDirector);
+
+    List<IDirectorRepository.EstudianteDirector> findEstudianteDirector(String id);
 }

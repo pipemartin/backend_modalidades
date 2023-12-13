@@ -124,4 +124,11 @@ public class EstudianteService implements IEstudianteService {
     public List<IEstudianteRepository.EstudianteProyectoProjection> findEstudianteProyecto(Long id) {
         return repository.findEstudianteProyecto(id);
     }
+
+    @Override
+    public List<IEstudianteRepository.EstudianteProyecto> findEstudiante(String codigo) {
+        return repository.findEstudiante(codigo);
+    }
+
+
 }

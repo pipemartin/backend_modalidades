@@ -18,14 +18,11 @@ public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long usu_id;
+    private Long usuid;
     private String password;
     private String username;
-    private String usu_apellido;
     private String usu_estado;
-
-    private String usu_telefono;
-
+    private String codigo;
     private Long pro_id;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
@@ -35,22 +32,29 @@ public class Usuario implements UserDetails {
     public Usuario(){
 
     }
-    public Usuario(Long usu_id, String username, String password, String usu_apellido, String usu_estado, String usu_telefono, Long pro_id) {
-        this.usu_id = usu_id;
+
+    public Usuario(String username, String password, String codigo) {
+
         this.username = username;
         this.password = password;
-        this.usu_apellido = usu_apellido;
+        this.codigo = codigo;
+    }
+
+    public Usuario(Long usuid, String username, String password, String usu_estado, String codigo, Long pro_id) {
+        this.usuid = usuid;
+        this.username = username;
+        this.password = password;
         this.usu_estado = usu_estado;
-        this.usu_telefono = usu_telefono;
+        this.codigo = codigo;
         this.pro_id = pro_id;
     }
 
-    public Long getUsu_id() {
-        return usu_id;
+    public Long getUsuid() {
+        return usuid;
     }
 
-    public void setUsu_id(Long usu_id) {
-        this.usu_id = usu_id;
+    public void setUsuid(Long usuid) {
+        this.usuid = usuid;
     }
 
     @Override
@@ -101,13 +105,6 @@ public class Usuario implements UserDetails {
         this.password = password;
     }
 
-    public String getUsu_apellido() {
-        return usu_apellido;
-    }
-
-    public void setUsu_apellido(String usu_apellido) {
-        this.usu_apellido = usu_apellido;
-    }
 
     public String getUsu_estado() {
         return usu_estado;
@@ -117,12 +114,12 @@ public class Usuario implements UserDetails {
         this.usu_estado = usu_estado;
     }
 
-    public String getUsu_telefono() {
-        return usu_telefono;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setUsu_telefono(String usu_telefono) {
-        this.usu_telefono = usu_telefono;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public Set<UsuarioRol> getUsuarioRoles() {

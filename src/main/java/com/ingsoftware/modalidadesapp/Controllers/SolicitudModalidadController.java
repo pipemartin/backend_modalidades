@@ -36,7 +36,7 @@ public class SolicitudModalidadController {
         Long tipoModalidad = solicitudProyectoRequest.getTipoModalidad();
         String titulo = solicitudProyectoRequest.getTitulo();
 
-        service.saveSolicitudProyecto(pdfFormulario, tipoModalidad, titulo);
+            service.saveSolicitudProyecto(pdfFormulario, tipoModalidad, titulo);
 
         return ResponseEntity.ok("Solicitud y proyecto creados exitosamente");
     }

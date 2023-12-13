@@ -40,7 +40,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter  {
         }if (request.getServletPath().contains("/api/user/register")) {
             filterChain.doFilter(request, response);
             return;
+        }if (request.getServletPath().contains("/api/user/registerEstudiante")) {
+            filterChain.doFilter(request, response);
+            return;
         }if (request.getServletPath().contains("/api/user/update")) {
+            filterChain.doFilter(request, response);
+            return;
+        }if (request.getServletPath().contains("/api/user/updateUsuario")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -51,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter  {
             System.out.println("SI entra al if de Bearer");
             jwtToken = requestTokenHeader.substring(7);
             try{
-                username = this.jwtUtil.extractUsername(jwtToken);
+                username = this.jwtUtil.extractEmail(jwtToken);
             }catch (ExpiredJwtException exception){
                 System.out.println("El token ha expirado");
                 return;

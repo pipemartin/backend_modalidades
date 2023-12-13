@@ -56,4 +56,11 @@ public class EstudianteController {
         List<IEstudianteRepository.EstudianteProyectoProjection> estudianteProyectoData = service.findEstudianteProyecto(id);
         return new ResponseEntity<>(estudianteProyectoData, HttpStatus.OK);
     }
+    @GetMapping("/findEstudiante/{codigo}")
+    public ResponseEntity<List<IEstudianteRepository.EstudianteProyecto>> obtenerEstudiante(@PathVariable String codigo) {
+        List<IEstudianteRepository.EstudianteProyecto> estudianteProyectoData = service.findEstudiante(codigo);
+        return new ResponseEntity<>(estudianteProyectoData, HttpStatus.OK);
+    }
+
+
 }

@@ -3,6 +3,7 @@ package com.ingsoftware.modalidadesapp.Services;
 import com.ingsoftware.modalidadesapp.IServices.IDirectorService;
 import com.ingsoftware.modalidadesapp.Models.DirectorModel;
 import com.ingsoftware.modalidadesapp.Repositories.IDirectorRepository;
+import com.ingsoftware.modalidadesapp.Repositories.IEstudianteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +55,11 @@ public class DirectorService implements IDirectorService {
         existingDirector.setDir_estado(updatedDirector.getDir_estado());
 
         return directorRepository.save(existingDirector);
+    }
+
+    @Override
+    public List<IDirectorRepository.EstudianteDirector> findEstudianteDirector(String codigo) {
+        return directorRepository.findEstudianteDirector(codigo);
     }
 
 }

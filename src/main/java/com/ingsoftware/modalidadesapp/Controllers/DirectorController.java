@@ -3,6 +3,7 @@ package com.ingsoftware.modalidadesapp.Controllers;
 import com.ingsoftware.modalidadesapp.IServices.IDirectorService;
 import com.ingsoftware.modalidadesapp.Models.DirectorModel;
 import com.ingsoftware.modalidadesapp.Repositories.IDirectorRepository;
+import com.ingsoftware.modalidadesapp.Repositories.IEstudianteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,5 +50,11 @@ public class DirectorController {
         }
 
         return ResponseEntity.ok(updatedDirector);
+    }
+
+    @GetMapping("/findEstudianteDirector/{codigo}")
+    public ResponseEntity<List<IDirectorRepository.EstudianteDirector>> obtenerEstudianteDirector(@PathVariable String codigo) {
+        List<IDirectorRepository.EstudianteDirector> estudianteDirectorData = service.findEstudianteDirector(codigo);
+        return new ResponseEntity<>(estudianteDirectorData, HttpStatus.OK);
     }
 }

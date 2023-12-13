@@ -1,7 +1,6 @@
 package com.ingsoftware.modalidadesapp.Services;
 
 import com.ingsoftware.modalidadesapp.IServices.IUsuarioService;
-import com.ingsoftware.modalidadesapp.Models.EstudianteModel;
 import com.ingsoftware.modalidadesapp.Models.Usuario;
 import com.ingsoftware.modalidadesapp.Models.UsuarioRol;
 import com.ingsoftware.modalidadesapp.Repositories.IRolRepository;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -65,6 +65,36 @@ public class UsuarioServiceImpl implements IUsuarioService {
             System.out.println("El usuario No existe");
             return false;
         }
+    }
+
+    @Override
+    public boolean updateCodigo(Integer idUser, String username, String codigo){
+        // Convertir la cadena a long
+        long idUserLong = idUser.longValue();
+        //op es el objeto que va validar si existe un registro con el id que llega por parametro [id]
+        Usuario usuarioLocal =  usuarioRepository.findByUsuid(idUserLong);
+        if(usuarioLocal != null){
+            System.out.println("El usuario ya existe");
+            usuarioLocal.setUsername(username);
+            usuarioLocal.setCodigo(codigo);
+            usuarioRepository.save(usuarioLocal);
+            return true;
+        } else {
+            System.out.println("El usuario No existe");
+            return false;
+        }
+    }
+
+    @Override
+    public Usuario estudianteCodigo(String codigoEstudiante) {
+        Usuario usuarioLocal = usuarioRepository.findByCodigo(codigoEstudiante);
+        return usuarioLocal;
+    }
+
+    @Override
+    public Usuario estudianteUsername(String usernameEstudiante) {
+        Usuario usuarioLocal = usuarioRepository.findByUsername(usernameEstudiante);
+        return usuarioLocal;
     }
 
 }

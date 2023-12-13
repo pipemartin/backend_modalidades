@@ -24,4 +24,7 @@ public interface IEstudianteService {
     void saveEstudiantePrograma(List<EstudianteProgramaRequest> datosEstudiantes);
 
     List<IEstudianteRepository.EstudianteProyectoProjection> findEstudianteProyecto(Long id);
+
+    List<IEstudianteRepository.EstudianteProyecto> findEstudiante(String id);
+
 }

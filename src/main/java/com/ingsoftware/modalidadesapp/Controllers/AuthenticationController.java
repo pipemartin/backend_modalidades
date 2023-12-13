@@ -18,11 +18,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.security.Principal;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("api/user")
@@ -38,6 +35,8 @@ public class AuthenticationController {
     @Autowired
     private IUsuarioService usuarioService;
 
+
+
     @Autowired
     private JwtUtils jwtUtils;
 
@@ -51,6 +50,27 @@ public class AuthenticationController {
         Rol rol = new Rol();
         rol.setRolId(1L);
         rol.setRol_nombre("ADMINISTRADOR");
+
+        UsuarioRol usuarioRol = new UsuarioRol();
+        usuarioRol.setUsuario(usuario);
+        usuarioRol.setRol(rol);
+
+        usuarioRoles.add(usuarioRol);
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuario.setUsu_estado("1");
+        usuario.setPro_id(1L);
+        //System.out.println(usuario.getUsu_estado() + usuario.getUsu_nombre() +  usuario.getUsername() +  usuario.getUsu_email()+"\n");
+
+        return usuarioService.guardarUsuario(usuario,usuarioRoles);
+    }
+
+    @PostMapping("/registerEstudiante")
+    public Usuario registerEstudiante(@RequestBody Usuario usuario) throws Exception {
+        Set<UsuarioRol> usuarioRoles = new HashSet<>();
+
+        Rol rol = new Rol();
+        rol.setRolId(2L);
+        rol.setRol_nombre("USUARIO");
 
         UsuarioRol usuarioRol = new UsuarioRol();
         usuarioRol.setUsuario(usuario);
@@ -107,6 +127,30 @@ public class AuthenticationController {
         String newPassword = requestBody.get("newPassword");
         boolean isCorrect = usuarioService.updateUsuario(username,newPassword);
         return isCorrect  ? ResponseEntity.ok("Usuario update") : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error usuario update");
+    }
+
+    @PostMapping("/estudianteUsername")
+    public ResponseEntity<Usuario> obtenerEstudianteCodigo(@RequestBody  Map<String, String> requestBody){
+        String username = requestBody.get("username");
+        String nada = requestBody.get("nada");
+        Usuario usuario = usuarioService.estudianteUsername(username);
+        if (usuario != null) {
+            return ResponseEntity.ok(usuario);
+        } else {
+            // En este caso, el usuario no es una instancia de Usuario.
+            // Puedes manejar esta situación de acuerdo a tus necesidades.
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @PostMapping("/updateUsuario")
+    private ResponseEntity<String> updateUsuarioCodigo(@RequestBody Map<String, Object> requestBody) {
+        Integer idUser = (Integer) requestBody.get("userId");
+        String username = (String) requestBody.get("username");
+        String codigo = (String) requestBody.get("codigo");
+        boolean isCorrect = usuarioService.updateCodigo(idUser, username, codigo);
+        return isCorrect  ? ResponseEntity.ok("Usuario update") : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error usuario update");
+
     }
 
 }
