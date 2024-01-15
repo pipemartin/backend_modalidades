@@ -20,6 +20,10 @@ public interface IEstudianteRepository extends JpaRepository<EstudianteModel, Lo
 
     }
 
+    public interface EstudianteDelete {
+        Long getEstu_id();
+    }
+
     public interface EstudianteProyecto {
 
         String getSolm_id();
@@ -58,6 +62,12 @@ public interface IEstudianteRepository extends JpaRepository<EstudianteModel, Lo
             "inner join estado on solicitud_modalidad_estado.est_id = estado.est_id\n" +
             "where estudiante_programa.esp_codigo = :codigo AND solicitud_modalidad_estado.est_id IN (1, 2, 3, 4, 5, 6, 7)", nativeQuery = true)
     List<EstudianteProyecto> findEstudiante(@Param("codigo") String id);
+
+    @Query(value = "select estudiante.estu_id\n" +
+            "from estudiante_programa\n" +
+            "inner join estudiante on estudiante_programa.estu_id = estudiante.estu_id\n" +
+            "where estudiante_programa.esp_codigo = :codigo", nativeQuery = true)
+    List<EstudianteDelete> findEstudianteDelete(@Param("codigo") String id);
 
 
     @Query(value = "SELECT estu_id FROM estudiante ORDER BY estu_id DESC LIMIT 1", nativeQuery = true)

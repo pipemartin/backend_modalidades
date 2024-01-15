@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 //@CrossOrigin(origins = "*")
@@ -133,5 +134,13 @@ public class SolicitudModalidadController {
         return ResponseEntity.ok("Solicitud y otras creados exitosamente");
     }
 
+    @PostMapping("/eliminar_solicitud")
+    public ResponseEntity<String> eliminarSolicitud(@RequestBody Map<String, String> requestBody){
+        String solicitud_Id = (String) requestBody.get("solicitudID");
+        String estudianCodigo = (String) requestBody.get("codigoEstudiante");
+        //System.out.println(solicitud_Id + estudianCodigo);
+        service.deleteSolicitud(solicitud_Id, estudianCodigo);
+        return ResponseEntity.ok("Solicitud eliminada");
+    }
 
 }

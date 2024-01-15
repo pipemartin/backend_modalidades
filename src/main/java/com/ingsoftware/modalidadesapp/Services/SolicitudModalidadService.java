@@ -49,6 +49,9 @@ public class SolicitudModalidadService implements ISolicitudModalidadService {
     private
     IEmpresaRepository empresaRepository;
 
+    @Autowired
+    private IEstudianteRepository estudianteRepository;
+
     @Override
     public List<SolicitudModalidadModel> all(){return solicitudModalidadRepository.findAll();}
 
@@ -58,6 +61,35 @@ public class SolicitudModalidadService implements ISolicitudModalidadService {
     @Override
     public SolicitudModalidadModel save(SolicitudModalidadModel solicitudModalidad) {return solicitudModalidadRepository.save(solicitudModalidad);}
 
+    //Eliminar Solicitud
+    @Override
+    public void deleteSolicitud(String solicitud_Id, String estudianteCodigo) {
+
+
+
+
+        solicitudModalidadRepository.deleteCierreModalidad(solicitud_Id);
+        solicitudModalidadRepository.deleteAsignacionDirector(solicitud_Id);
+        solicitudModalidadRepository.deleteEstudianteSolicitud(solicitud_Id);
+        solicitudModalidadRepository.deleteEstadoSolicitud(solicitud_Id);
+        solicitudModalidadRepository.deleteConcepto(solicitud_Id);
+
+
+        solicitudModalidadRepository.deleteProyectoGrado(solicitud_Id);
+        solicitudModalidadRepository.deletePosgrado(solicitud_Id);
+        solicitudModalidadRepository.deletePractica(solicitud_Id);
+        solicitudModalidadRepository.deleteEmpresa(solicitud_Id);
+        solicitudModalidadRepository.deleteEmprendimiento(solicitud_Id);
+        solicitudModalidadRepository.deleteSolicitud(solicitud_Id);
+
+        List<IEstudianteRepository.EstudianteDelete> listEstudiante = estudianteRepository.findEstudianteDelete(estudianteCodigo);
+        listEstudiante.forEach(estudiante -> {
+            solicitudModalidadRepository.deleteEstudianteProg(String.valueOf(estudiante.getEstu_id()));
+            solicitudModalidadRepository.deleteEstudiante(String.valueOf(estudiante.getEstu_id()));
+        });
+
+        System.out.println("delete solicitud");
+    }
 
     //TODO Para guardar en tablas relacionadas con Modalidad PROYECTO DE GRADO
     @Override

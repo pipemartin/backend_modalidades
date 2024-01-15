@@ -14,6 +14,9 @@ public interface ISolicitudModalidadService {
     //Consultar por ID
     Optional<SolicitudModalidadModel> findById(Long id);
 
+    //eliminar solicitud
+    public void deleteSolicitud(String solicitud_Id, String estudianCodigo);
+
     //Guardar
     SolicitudModalidadModel save(SolicitudModalidadModel solicitudModalidad);
 
